@@ -13,7 +13,7 @@ const storyParts = {
             { text: "Reach in and grab the shiny object.", next: "gem" },
             { text: "Continue along the path.", next: "path" }
         ],
-        background: "url('brook.jpg')"
+        background: "url('Images/brook.jpg')"
     },
     footprints: {
         text: "You follow the glowing footprints to a clearing with a giant tree.",
@@ -21,7 +21,7 @@ const storyParts = {
             { text: "Open the door in the tree.", next: "insideTree" },
             { text: "Explore the glowing clearing.", next: "clearing" }
         ],
-        background: "url('footprints.jpg')"
+        background: "url('Images/footprints.jpg')"
     },
     gem: {
         text: "You reach into the brook and pull out a sparkling gem. It vibrates violently.",
@@ -29,12 +29,12 @@ const storyParts = {
             { text: "Keep the gem and continue along the path.", next: "gemPath" },
             { text: "Throw the gem back into the brook.", next: "deathGem" }
         ],
-        background: "url('gem.jpg')"
+        background: "url('Images/gem.jpg')"
     },
     deathGem: {
         text: "The gem explodes as you throw it back. Darkness engulfs you. Your journey ends here.",
         options: [],
-        background: "url('death.jpg')"
+        background: "url('Images/explosion.jpg')"
     },
     gemPath: {
         text: "With the gem in hand, you feel a surge of courage. The path splits ahead.",
@@ -42,7 +42,7 @@ const storyParts = {
             { text: "Take the left path toward the mountains.", next: "mountains" },
             { text: "Take the right path into a dark cave.", next: "deathCave" }
         ],
-        background: "url('gem_path.jpg')"
+        background: "url('Images/split.jpg')"
     },
     path: {
         text: "You continue along the forest path, surrounded by shimmering leaves.",
@@ -50,7 +50,7 @@ const storyParts = {
             { text: "Follow the trail to a meadow.", next: "deathMeadow" },
             { text: "Head toward a distant hill.", next: "hill" }
         ],
-        background: "url('path.jpg')"
+        background: "url('Images/leaves.jpg')"
     },
     insideTree: {
         text: "Inside the tree, you find a friendly gnome offering you two items.",
@@ -58,7 +58,7 @@ const storyParts = {
             { text: "Take the map.", next: "map" },
             { text: "Take the magical potion.", next: "deathPotion" }
         ],
-        background: "url('inside_tree.jpg')"
+        background: "url('Images/hole.jpg')"
     },
     clearing: {
         text: "The clearing is filled with glowing stones inscribed with ancient runes.",
@@ -66,12 +66,12 @@ const storyParts = {
             { text: "Touch the glowing stones.", next: "runes" },
             { text: "Sit and rest by the stones.", next: "deathRest" }
         ],
-        background: "url('clearing.jpg')"
+        background: "url('Images/runes.jpg')"
     },
     deathRest: {
         text: "You sit by the stones, but their energy consumes you. Your journey ends here.",
         options: [],
-        background: "url('death.jpg')"
+        background: "url('Images/explosion.jpg')"
     },
     runes: {
         text: "Touching the stones teleports you to a hidden cave filled with treasure!",
