@@ -79,12 +79,12 @@ const storyParts = {
             { text: "Explore the treasure.", next: "treasure" },
             { text: "Find a way to teleport back.", next: "deathTeleport" }
         ],
-        background: "url('runes.jpg')"
+        background: "url('Images/caveChest.jpg')"
     },
     deathTeleport: {
         text: "The teleportation fails, and you vanish into the void. Your journey ends here.",
         options: [],
-        background: "url('death.jpg')"
+        background: "url('Images/void.jpg')"
     },
     treasure: {
         text: "Among the treasure, you find ancient gold and a magical staff radiating power.",
@@ -92,34 +92,34 @@ const storyParts = {
             { text: "Take the staff and leave the cave.", next: "endTreasure" },
             { text: "Take the gold and teleport back.", next: "deathGold" }
         ],
-        background: "url('treasure.jpg')"
+        background: "url('Images/wand.jpg')"
     },
     deathGold: {
         text: "The gold was cursed! You collapse as the curse takes hold. Your journey ends here.",
         options: [],
-        background: "url('death.jpg')"
+        background: "url('Images/explosion.jpg')"
     },
     endTreasure: {
         text: "With the staff in hand, you feel the forest's power coursing through you. You have succeeded!",
         options: [],
-        background: "url('success.jpg')"
+        background: "url('Images/wandVictory.jpg')"
     },
     map: {
         text: "The map reveals a hidden trail leading to a mysterious castle.",
         options: [
             { text: "Follow the map's trail.", next: "castle" }
         ],
-        background: "url('map.jpg')"
+        background: "url('Images/map.jpg')"
     },
     deathPotion: {
         text: "The potion was poisonous! You collapse as your vision fades. Your journey ends here.",
         options: [],
-        background: "url('death.jpg')"
+        background: "url('Images/explosion.jpg)"
     },
     deathMeadow: {
         text: "The meadow is beautiful, but it was a trap! You are surrounded by creatures. Your journey ends here.",
         options: [],
-        background: "url('death.jpg')"
+        background: "url('Image/darkMeadows.jpg')"
     },
     mountains: {
         text: "The mountain path is steep but rewarding. You find an abandoned camp.",
@@ -127,7 +127,7 @@ const storyParts = {
             { text: "Search the camp.", next: "camp" },
             { text: "Climb higher up the mountain.", next: "deathPeak" }
         ],
-        background: "url('mountains.jpg')"
+        background: "url('Image/abandonCamp.jpg')"
     },
     deathPeak: {
         text: "As you climb higher, the air thins and the trail disappears. You lose your footing and fall. Your journey ends here.",
