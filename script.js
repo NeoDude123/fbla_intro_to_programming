@@ -1,125 +1,207 @@
-// Story structure: Each part of the story is defined as an object
 const storyParts = {
     start: {
-        text: "You find yourself at the edge of a mysterious forest...",
+        text: "You find yourself at the edge of a mysterious forest. The air is thick with magic.",
         options: [
             { text: "Follow the sound of the brook.", next: "brook" },
             { text: "Follow the glowing footprints.", next: "footprints" }
         ],
-        background: "url('Images/forestImage.png')"
+        background: "url('Images/forest.jpg')"
     },
     brook: {
-        text: "You hear the sound of water and follow it to a crystal-clear stream...",
+        text: "You follow the sound of water and find a crystal-clear brook. The air feels heavier.",
         options: [
             { text: "Reach in and grab the shiny object.", next: "gem" },
             { text: "Continue along the path.", next: "path" }
         ],
-        background: "url('Images/streamImage.png')"
+        background: "url('brook.jpg')"
     },
     footprints: {
-        text: "You follow the glowing footprints into a clearing with a giant tree...",
+        text: "You follow the glowing footprints to a clearing with a giant tree.",
         options: [
-            { text: "Open the door and go inside.", next: "insideTree" },
-            { text: "Explore the clearing further.", next: "clearing" }
+            { text: "Open the door in the tree.", next: "insideTree" },
+            { text: "Explore the glowing clearing.", next: "clearing" }
         ],
-        background: "url('Images/footPrintTrail.png')"
+        background: "url('footprints.jpg')"
     },
     gem: {
-        text: "You find a sparkling gem. Holding it fills you with energy.",
+        text: "You reach into the brook and pull out a sparkling gem. It vibrates violently.",
         options: [
-            { text: "Keep the gem.", next: "continuePath" },
-            { text: "Throw it back into the stream.", next: "backStream" }
+            { text: "Keep the gem and continue along the path.", next: "gemPath" },
+            { text: "Throw the gem back into the brook.", next: "deathGem" }
         ],
-        background: "url('Images/gem.png')"
+        background: "url('gem.jpg')"
     },
-    insideTree: {
-        text: "Inside the tree, a friendly gnome greets you.",
+    deathGem: {
+        text: "The gem explodes as you throw it back. Darkness engulfs you. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
+    },
+    gemPath: {
+        text: "With the gem in hand, you feel a surge of courage. The path splits ahead.",
         options: [
-            { text: "Take the map.", next: "map" },
-            { text: "Take the magical potion.", next: "potion" }
+            { text: "Take the left path toward the mountains.", next: "mountains" },
+            { text: "Take the right path into a dark cave.", next: "deathCave" }
         ],
-        background: "url('Images/gnomeHouse.png')"
+        background: "url('gem_path.jpg')"
     },
     path: {
-        text: "The path leads to a meadow filled with glowing flowers...",
+        text: "You continue along the forest path, surrounded by shimmering leaves.",
         options: [
-            { text: "Pick a flower.", next: "flower" },
-            { text: "Sit and rest.", next: "rest" }
+            { text: "Follow the trail to a meadow.", next: "deathMeadow" },
+            { text: "Head toward a distant hill.", next: "hill" }
         ],
-        background: "url('meadow.jpg')"
+        background: "url('path.jpg')"
+    },
+    insideTree: {
+        text: "Inside the tree, you find a friendly gnome offering you two items.",
+        options: [
+            { text: "Take the map.", next: "map" },
+            { text: "Take the magical potion.", next: "deathPotion" }
+        ],
+        background: "url('inside_tree.jpg')"
     },
     clearing: {
-        text: "In the clearing, you find a circle of stones with runes glowing faintly.",
+        text: "The clearing is filled with glowing stones inscribed with ancient runes.",
         options: [
-            { text: "Touch the stones.", next: "runes" },
-            { text: "Sit and observe.", next: "observe" }
+            { text: "Touch the glowing stones.", next: "runes" },
+            { text: "Sit and rest by the stones.", next: "deathRest" }
         ],
         background: "url('clearing.jpg')"
     },
+    deathRest: {
+        text: "You sit by the stones, but their energy consumes you. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
+    },
     runes: {
-        text: "The runes pulse with light and teleport you to a hidden cave...",
+        text: "Touching the stones teleports you to a hidden cave filled with treasure!",
         options: [
-            { text: "Explore the cave.", next: "cave" },
-            { text: "Try to teleport back.", next: "teleportBack" }
+            { text: "Explore the treasure.", next: "treasure" },
+            { text: "Find a way to teleport back.", next: "deathTeleport" }
         ],
-        background: "url('cave.jpg')"
+        background: "url('runes.jpg')"
     },
-    flower: {
-        text: "You pick a glowing flower and it grants you a vision of the forest's secrets.",
-        options: [{ text: "Continue on your journey.", next: "start" }],
-        background: "url('flower.jpg')"
+    deathTeleport: {
+        text: "The teleportation fails, and you vanish into the void. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
     },
-    rest: {
-        text: "You sit and rest, feeling the magic of the forest rejuvenating you.",
-        options: [{ text: "Return to the path.", next: "start" }],
-        background: "url('rest.jpg')"
+    treasure: {
+        text: "Among the treasure, you find ancient gold and a magical staff radiating power.",
+        options: [
+            { text: "Take the staff and leave the cave.", next: "endTreasure" },
+            { text: "Take the gold and teleport back.", next: "deathGold" }
+        ],
+        background: "url('treasure.jpg')"
+    },
+    deathGold: {
+        text: "The gold was cursed! You collapse as the curse takes hold. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
+    },
+    endTreasure: {
+        text: "With the staff in hand, you feel the forest's power coursing through you. You have succeeded!",
+        options: [],
+        background: "url('success.jpg')"
     },
     map: {
-        text: "You take the map, which reveals hidden paths through the forest.",
-        options: [{ text: "Follow the map.", next: "path" }],
+        text: "The map reveals a hidden trail leading to a mysterious castle.",
+        options: [
+            { text: "Follow the map's trail.", next: "castle" }
+        ],
         background: "url('map.jpg')"
     },
-    potion: {
-        text: "The potion grants you temporary invisibility to explore the forest unseen.",
-        options: [{ text: "Use the potion.", next: "clearing" }],
-        background: "url('potion.jpg')"
+    deathPotion: {
+        text: "The potion was poisonous! You collapse as your vision fades. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
     },
-    cave: {
-        text: "In the cave, you find ancient treasures guarded by a sleeping dragon.",
-        options: [{ text: "Return quietly to the clearing.", next: "clearing" }],
-        background: "url('cave_treasure.jpg')"
+    deathMeadow: {
+        text: "The meadow is beautiful, but it was a trap! You are surrounded by creatures. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
     },
-    teleportBack: {
-        text: "You successfully teleport back to the clearing.",
-        options: [{ text: "Explore the clearing further.", next: "clearing" }],
-        background: "url('teleport.jpg')"
+    mountains: {
+        text: "The mountain path is steep but rewarding. You find an abandoned camp.",
+        options: [
+            { text: "Search the camp.", next: "camp" },
+            { text: "Climb higher up the mountain.", next: "deathPeak" }
+        ],
+        background: "url('mountains.jpg')"
+    },
+    deathCave: {
+        text: "The cave is dark, and a monstrous roar echoes. You don't make it out alive. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
+    },
+    camp: {
+        text: "The camp holds old supplies and a journal hinting at a hidden artifact.",
+        options: [
+            { text: "Follow the journal's clues.", next: "artifact" },
+            { text: "Take the supplies and return to the path.", next: "path" }
+        ],
+        background: "url('camp.jpg')"
+    },
+    artifact: {
+        text: "You find the artifact deep in the forest. It grants you wisdom and peace.",
+        options: [
+            { text: "Use the artifact to end your journey.", next: "endArtifact" }
+        ],
+        background: "url('artifact.jpg')"
+    },
+    endArtifact: {
+        text: "With the artifact in hand, you feel a profound connection to the forest. You have succeeded!",
+        options: [],
+        background: "url('success.jpg')"
+    },
+    hill: {
+        text: "The hill offers a stunning view of the entire forest. You feel at peace but vulnerable.",
+        options: [
+            { text: "Descend back to the path.", next: "path" }
+        ],
+        background: "url('hill.jpg')"
+    },
+    castle: {
+        text: "The castle looms in the distance, ancient and foreboding.",
+        options: [
+            { text: "Enter the castle.", next: "deathCastle" }
+        ],
+        background: "url('castle.jpg')"
+    },
+    deathCastle: {
+        text: "The castle was a trap! Its walls close in, and darkness engulfs you. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
     }
 };
 
-// Keeps track of the player's choices
 let journey = [];
+let clickCount = 0;
+const maxClicks = 10;
 
-// Function to display the story based on the part
 function displayStoryPart(part) {
     const storyText = document.getElementById("storyText");
     const optionsDiv = document.getElementById("options");
     const currentPart = storyParts[part];
 
-    // Validate if the story part exists
     if (!currentPart) {
         storyText.textContent = "Something went wrong. Unable to load this part of the story.";
         optionsDiv.innerHTML = "";
         return;
     }
 
-    // Update text and background
+    clickCount++;
+    if (clickCount >= maxClicks && currentPart.options.length > 0) {
+        storyText.textContent = "Your adventure comes to an end. Thank you for exploring the Enchanted Forest!";
+        optionsDiv.innerHTML = "";
+        journey.push("Story ended automatically after reaching the maximum choices.");
+        return;
+    }
+
     storyText.textContent = currentPart.text;
     document.body.style.backgroundImage = currentPart.background;
-
-    // Track user progress
     journey.push(currentPart.text);
 
-    // Clear previous options and add new ones
     optionsDiv.innerHTML = "";
     currentPart.options.forEach(option => {
         const button = document.createElement("button");
@@ -129,25 +211,12 @@ function displayStoryPart(part) {
     });
 }
 
-// Stop story function
 function stopStory() {
-    const storyText = document.getElementById("storyText");
-    const optionsDiv = document.getElementById("options");
-
-    // Set final message and clear options
-    storyText.textContent = "Thank you for playing! Your adventure is saved. Come back soon!";
-    optionsDiv.innerHTML = ""; // Remove all buttons and options
+    document.getElementById("storyText").textContent = "Thank you for playing! Your adventure is saved.";
+    document.getElementById("options").innerHTML = "";
     journey.push("Story ended by user.");
-
-    // Disable all child buttons within the container
-    const buttons = optionsDiv.querySelectorAll("button");
-    buttons.forEach(button => {
-        button.disabled = true; // Disable buttons if any remain (fallback safety)
-        button.style.display = "none"; // Ensure they are hidden
-    });
 }
 
-// Modal functions
 function openHelp() {
     document.getElementById("helpModal").style.display = "block";
 }
@@ -166,5 +235,4 @@ function closeSummary() {
     document.getElementById("summaryModal").style.display = "none";
 }
 
-// Start the story
 displayStoryPart("start");
