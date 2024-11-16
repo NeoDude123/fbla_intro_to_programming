@@ -119,7 +119,7 @@ const storyParts = {
     deathMeadow: {
         text: "The meadow is beautiful, but it was a trap! You are surrounded by creatures. Your journey ends here.",
         options: [],
-        background: "url('Image/darkMeadows.jpg')"
+        background: "url('Images/darkMeadows.jpg')"
     },
     mountains: {
         text: "The mountain path is steep but rewarding. You find an abandoned camp.",
@@ -127,17 +127,17 @@ const storyParts = {
             { text: "Search the camp.", next: "camp" },
             { text: "Climb higher up the mountain.", next: "deathPeak" }
         ],
-        background: "url('Image/abandonCamp.jpg')"
+        background: "url('Images/abandonCamp.jpg')"
     },
     deathPeak: {
         text: "As you climb higher, the air thins and the trail disappears. You lose your footing and fall. Your journey ends here.",
         options: [],
-        background: "url('Image/cliff.jpg')"
+        background: "url('Images/cliff.jpg')"
     },
     deathCave: {
         text: "The cave is dark, and a monstrous roar echoes. You don't make it out alive. Your journey ends here.",
         options: [],
-        background: "url('Image/darkCave.jpg')"
+        background: "url('Images/darkCave.jpg')"
     },
     camp: {
         text: "The camp holds old supplies and a journal hinting at a hidden artifact.",
@@ -145,38 +145,38 @@ const storyParts = {
             { text: "Follow the journal's clues.", next: "artifact" },
             { text: "Take the supplies and return to the path.", next: "path" }
         ],
-        background: "url('Image/notebook.jpg')"
+        background: "url('Images/notebook.jpg')"
     },
     artifact: {
         text: "You find the artifact deep in the forest. It grants you wisdom and peace.",
         options: [
             { text: "Use the artifact to end your journey.", next: "endArtifact" }
         ],
-        background: "url('Image/peace.jpg')"
+        background: "url('Images/peace.jpg')"
     },
     endArtifact: {
         text: "With the artifact in hand, you feel a profound connection to the forest. You have succeeded!",
         options: [],
-        background: "url('Image/connection.jpg')"
+        background: "url('Images/connection.jpg')"
     },
     hill: {
         text: "The hill offers a stunning view of the entire forest. You feel at peace but vulnerable.",
         options: [
             { text: "Descend back to the path.", next: "path" }
         ],
-        background: "url('Image/hill.jpg')"
+        background: "url('Images/hill.jpg')"
     },
     castle: {
         text: "The castle looms in the distance, ancient and foreboding.",
         options: [
             { text: "Enter the castle.", next: "deathCastle" }
         ],
-        background: "url('Image/castle.jpg')"
+        background: "url('Images/castle.jpg')"
     },
     deathCastle: {
         text: "The castle was a trap! Its walls close in, and darkness engulfs you. Your journey ends here.",
         options: [],
-        background: "url('Image/darkness.jpg')"
+        background: "url('Images/darkness.jpg')"
     }
 };
 let journey = [];
