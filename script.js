@@ -129,6 +129,11 @@ const storyParts = {
         ],
         background: "url('mountains.jpg')"
     },
+    deathPeak: {
+        text: "As you climb higher, the air thins and the trail disappears. You lose your footing and fall. Your journey ends here.",
+        options: [],
+        background: "url('death.jpg')"
+    },
     deathCave: {
         text: "The cave is dark, and a monstrous roar echoes. You don't make it out alive. Your journey ends here.",
         options: [],
@@ -174,7 +179,6 @@ const storyParts = {
         background: "url('death.jpg')"
     }
 };
-
 let journey = [];
 let clickCount = 0;
 const maxClicks = 10;
@@ -212,8 +216,13 @@ function displayStoryPart(part) {
 }
 
 function stopStory() {
-    document.getElementById("storyText").textContent = "Thank you for playing! Your adventure is saved.";
-    document.getElementById("options").innerHTML = "";
+    const storyText = document.getElementById("storyText");
+    const optionsDiv = document.getElementById("options");
+
+    // Set final message and remove all buttons
+    storyText.textContent = "Thank you for playing! We hope to see you again soon.";
+    optionsDiv.innerHTML = ""; // Clear all story options
+    document.querySelectorAll("button").forEach(button => button.remove()); // Remove ALL buttons
     journey.push("Story ended by user.");
 }
 
