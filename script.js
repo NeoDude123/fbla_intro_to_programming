@@ -183,6 +183,14 @@ let journey = [];
 let journeyText = [];
 let clickCount = 0;
 const maxClicks = 10;
+const helpButton = document.getElementById("helpButton");
+const backButton = document.getElementById("backButton");
+const restartButton = document.getElementById("restartButton");
+const stopButton = document.getElementById("stopButton");
+restartButton.style.display = "none";
+helpButton.style.display = "block";
+backButton.style.display = "block";
+stopButton.style.display = "block";
 
 function displayStoryPart(part) {
     const storyText = document.getElementById("storyText");
@@ -224,7 +232,13 @@ function stopStory() {
     // Set final message and remove all buttons
     storyText.textContent = "Thank you for playing! We hope to see you again soon.";
     optionsDiv.innerHTML = ""; // Clear all story options
-    document.querySelectorAll("button").forEach(button => button.remove()); // Remove ALL buttons
+
+    //document.querySelectorAll("button").forEach(button => button.remove);
+    helpButton.style.display = "none";
+    backButton.style.display = "none";
+    stopButton.style.display = "none";
+    restartButton.style.display = "block";
+    //document.getElementById("restartModal").style.display = "block"; // Remove ALL buttons
     journey.push("Story ended by user.");
 }
 
@@ -249,6 +263,15 @@ function closeSummary() {
 function goBack() {
     journeyText.pop();
     displayStoryPart(journeyText.pop());
+}
+
+function restart() {
+    //document.getElementById("restartModal").style.display = "none";
+    restartButton.style.display = "none";
+    displayStoryPart("start");
+    journey = [];
+    journeyText = [];
+    clickCount = 0;
 }
 
 displayStoryPart("start");
