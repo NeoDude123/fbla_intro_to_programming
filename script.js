@@ -180,6 +180,7 @@ const storyParts = {
     }
 };
 let journey = [];
+let journeyText = [];
 let clickCount = 0;
 const maxClicks = 10;
 
@@ -205,6 +206,7 @@ function displayStoryPart(part) {
     storyText.textContent = currentPart.text;
     document.body.style.backgroundImage = currentPart.background;
     journey.push(currentPart.text);
+    journeyText.push(part);
 
     optionsDiv.innerHTML = "";
     currentPart.options.forEach(option => {
@@ -242,6 +244,11 @@ function showSummary() {
 
 function closeSummary() {
     document.getElementById("summaryModal").style.display = "none";
+}
+
+function goBack() {
+    journeyText.pop();
+    displayStoryPart(journeyText.pop());
 }
 
 displayStoryPart("start");
