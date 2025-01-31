@@ -407,6 +407,18 @@ function processVoiceCommand(command) {
         return;
     }
 
+    //Back Button
+    if (command.includes("back")) { 
+        backButton();
+        return;
+    }
+
+    //Read Text
+    if (command.includes("read text")) { 
+        speakText();
+        return;
+    }
+
     //Restart button open
     if (stopB) {
         if (command.includes("restart")) {
@@ -516,7 +528,6 @@ function closeHelp() {
     document.getElementById("helpModal").style.display = "none";
 }
 
-//Function for opening the summary with the button
 // Function for opening the summary with the button
 function showSummary() {
     const summaryList = document.getElementById("journeyList");
@@ -528,14 +539,20 @@ function showSummary() {
         `;
     }).join("");
 
-    // Add the "Save Changes" button inside the modal
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save Changes";
-    saveButton.onclick = saveSummaryChanges;
-    document.getElementById("summaryModal").appendChild(saveButton);
+    // Check if the save button already exists
+    const existingSaveButton = document.querySelector("#summaryModal .saveButton");
+    if (!existingSaveButton) {
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save Changes";
+        saveButton.classList.add("saveButton");  // Add a class to uniquely identify the button
+        saveButton.onclick = saveSummaryChanges;
+        document.getElementById("summaryModal").appendChild(saveButton);
+    }
 
     document.getElementById("summaryModal").style.display = "block";
 }
+
+
 
 
 //Function for closing the summary when the close button is clicked
@@ -562,25 +579,6 @@ function saveSummaryChanges() {
     closeSummary();
 }
 
-// Function for opening the summary with the button
-function showSummary() {
-    const summaryList = document.getElementById("journeyList");
-    summaryList.innerHTML = journey.map((step, index) => {
-        return `
-            <li>
-                <input type="text" data-index="${index}" value="${step}" />
-            </li>
-        `;
-    }).join("");
-
-    // Add the "Save Changes" button inside the modal
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save Changes";
-    saveButton.onclick = saveSummaryChanges;
-    document.getElementById("summaryModal").appendChild(saveButton);
-
-    document.getElementById("summaryModal").style.display = "block";
-}
 
 
 
@@ -608,13 +606,28 @@ function restart() {
 }
 
 function speakText() {
-    const speech = new SpeechSynthesisUtterance();
+    const part = journeyText.pop();
+    const currentPart = storyParts[part];
+    let num = 1;
+    let text = "";
+    text += "Situation ";
+    text += currentPart.text;
+    
+    currentPart.options.forEach(option => {
+        text += "Option " + num.toString();
+        num++;
+        text += option.text;
+    });
+    text += "Other options are, ";
+    text += "Back, Stop, Help, View Journey Summary"
+    const speech = new SpeechSynthesisUtterance(text);
     speech.lang = "en-US"; // Set language (change if needed)
     speech.volume = 1; // Volume (0.0 to 1.0)
     speech.rate = 1; // Speed (0.1 to 10)
     speech.pitch = 1; // Pitch (0 to 2)
 
     window.speechSynthesis.speak(speech);
+    journeyText.push(part);
     }
 
 //Displaying the starting story part at the beginning of the adventure
