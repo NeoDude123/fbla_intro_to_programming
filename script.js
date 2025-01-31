@@ -343,6 +343,100 @@ const storyParts = {
     }
 };
 
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+
+recognition.continuous = false;
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+
+const voiceButton = document.getElementById("voiceButton");
+voiceButton.textContent = "Voice Command";
+document.body.appendChild(voiceButton);
+
+var stopB = false;
+var readText = false;
+var help = false;
+var journeySummary = false;
+
+function voiceClick() {
+    voiceButton.onclick = () => {
+        recognition.start();
+    };
+    
+    //When speech is recognized
+    recognition.onresult = (event) => {
+        processVoiceCommand(event.results[0][0].transcript.toLowerCase());
+    };
+};
+
+//Process the recognized command
+function processVoiceCommand(command) {
+    const currentPart = storyParts[journeyText[journeyText.length - 1]];
+    if (!currentPart) return;
+
+    //Match the spoken command with one of the available options
+    for (const option of currentPart.options) {
+        if (command.includes(option.text.toLowerCase())) {
+            displayStoryPart(option.next);
+            return;
+        }
+    }
+
+    //Match the spoken command with one of the permanent buttons that are always on the screen
+
+    //Stop button open
+    if (command.includes("stop")) {
+        stopB = true;
+        stopStory();
+        return;
+    }
+
+    //View Journey Summary Button Open
+    if (command.includes("view journey summary")) {
+        journeySummary = true;
+        showSummary();
+        return;
+    }
+
+    //Help Button Open
+    if (command.includes("help")) { 
+        help = true;
+        openHelp();
+        return;
+    }
+
+    //Restart button open
+    if (stopB) {
+        if (command.includes("restart")) {
+            stopB = false;
+            restart();
+            return;
+        }
+    }
+
+    //Journey Summary close
+    if (journeySummary) {
+        if (command.includes("close")) {
+            journeySummary = false;
+            closeSummary();
+            return;
+        }
+    }
+
+    //Help Button Close
+    if (help) {
+        if (command.includes("close")) {
+            help = false;
+            closeHelp();
+            return;
+        }
+    }
+    
+    alert("Command not recognized. Try saying one of the available options.");
+}
+
 //Necessary variables and lets for data storage
 let journey = [];
 let journeyText = [];
@@ -423,16 +517,72 @@ function closeHelp() {
 }
 
 //Function for opening the summary with the button
+// Function for opening the summary with the button
 function showSummary() {
     const summaryList = document.getElementById("journeyList");
-    summaryList.innerHTML = journey.map((step, index) => `<li>${index + 1}: ${step}</li>`).join("");
+    summaryList.innerHTML = journey.map((step, index) => {
+        return `
+            <li>
+                <input type="text" data-index="${index}" value="${step}" />
+            </li>
+        `;
+    }).join("");
+
+    // Add the "Save Changes" button inside the modal
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save Changes";
+    saveButton.onclick = saveSummaryChanges;
+    document.getElementById("summaryModal").appendChild(saveButton);
+
     document.getElementById("summaryModal").style.display = "block";
 }
+
 
 //Function for closing the summary when the close button is clicked
 function closeSummary() {
     document.getElementById("summaryModal").style.display = "none";
 }
+
+// Function for closing the summary when the close button is clicked
+function closeSummary() {
+    document.getElementById("summaryModal").style.display = "none";
+}
+
+// Function for saving the summary changes
+function saveSummaryChanges() {
+    const inputs = document.querySelectorAll("#journeyList input");
+    
+    // Update the journey array with the edited values
+    inputs.forEach(input => {
+        const index = input.dataset.index;
+        journey[index] = input.value;  // Save the edited value back to the journey array
+    });
+
+    // Close the modal after saving changes
+    closeSummary();
+}
+
+// Function for opening the summary with the button
+function showSummary() {
+    const summaryList = document.getElementById("journeyList");
+    summaryList.innerHTML = journey.map((step, index) => {
+        return `
+            <li>
+                <input type="text" data-index="${index}" value="${step}" />
+            </li>
+        `;
+    }).join("");
+
+    // Add the "Save Changes" button inside the modal
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save Changes";
+    saveButton.onclick = saveSummaryChanges;
+    document.getElementById("summaryModal").appendChild(saveButton);
+
+    document.getElementById("summaryModal").style.display = "block";
+}
+
+
 
 //Function for the back button to be functional
 function goBack() {
@@ -456,6 +606,16 @@ function restart() {
     backButton.style.visibility = "visible";
     stopButton.style.visibility = "visible";
 }
+
+function speakText() {
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "en-US"; // Set language (change if needed)
+    speech.volume = 1; // Volume (0.0 to 1.0)
+    speech.rate = 1; // Speed (0.1 to 10)
+    speech.pitch = 1; // Pitch (0 to 2)
+
+    window.speechSynthesis.speak(speech);
+    }
 
 //Displaying the starting story part at the beginning of the adventure
 displayStoryPart("start");
