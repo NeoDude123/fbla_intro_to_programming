@@ -187,8 +187,7 @@ const helpButton = document.getElementById("helpButton");
 const backButton = document.getElementById("backButton");
 const restartButton = document.getElementById("restartButton");
 const stopButton = document.getElementById("stopButton");
-restartButton.style.display = "none";
-
+restartButton.style.visibility = "hidden";
 
 function displayStoryPart(part) {
     const storyText = document.getElementById("storyText");
@@ -232,10 +231,10 @@ function stopStory() {
     optionsDiv.innerHTML = ""; // Clear all story options
 
     //document.querySelectorAll("button").forEach(button => button.remove);
-    helpButton.style.display = "none";
-    backButton.style.display = "none";
-    stopButton.style.display = "none";
-    restartButton.style.display = "block";
+    helpButton.style.visiblity = "hidden";
+    backButton.style.visibility = "hidden";
+    stopButton.style.visibility = "hidden";
+    restartButton.style.visibility = "visible";
     //document.getElementById("restartModal").style.display = "block"; // Remove ALL buttons
     journey.push("Story ended by user.");
 }
@@ -265,14 +264,14 @@ function goBack() {
 
 function restart() {
     //document.getElementById("restartModal").style.display = "none";
-    restartButton.style.display = "none";
+    restartButton.style.visibility = "hidden";
     displayStoryPart("start");
     journey = [];
     journeyText = [];
     clickCount = 0;
-    helpButton.style.display = "block";
-    backButton.style.display = "block";
-    stopButton.style.display = "block";
+    helpButton.style.visibility = "visible";
+    backButton.style.visibility = "visible";
+    stopButton.style.visibility = "visible";
 }
 
 displayStoryPart("start");
