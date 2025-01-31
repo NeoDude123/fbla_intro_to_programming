@@ -188,9 +188,7 @@ const backButton = document.getElementById("backButton");
 const restartButton = document.getElementById("restartButton");
 const stopButton = document.getElementById("stopButton");
 restartButton.style.display = "none";
-helpButton.style.display = "block";
-backButton.style.display = "block";
-stopButton.style.display = "block";
+
 
 function displayStoryPart(part) {
     const storyText = document.getElementById("storyText");
@@ -272,6 +270,9 @@ function restart() {
     journey = [];
     journeyText = [];
     clickCount = 0;
+    helpButton.style.display = "block";
+    backButton.style.display = "block";
+    stopButton.style.display = "block";
 }
 
 displayStoryPart("start");
