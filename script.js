@@ -258,8 +258,12 @@ function closeSummary() {
 }
 
 function goBack() {
-    journeyText.pop();
-    displayStoryPart(journeyText.pop());
+    
+    if(journeyText.length > 1){
+        journeyText.pop();
+        displayStoryPart(journeyText.pop());
+    }
+    
 }
 
 function restart() {
