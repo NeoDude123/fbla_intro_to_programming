@@ -106,7 +106,12 @@ function processVoiceCommand(command) {
         return;
     }
 
-    voiceClick();
+    if (command.includes("no")) {
+        alwaysSpeak = false;
+        return;
+    }
+
+    speakNoUnderstand();
 }
 
 //Method that speaks out the text based on what the current part of the story is
@@ -175,7 +180,7 @@ function stopSpeak(){
 function speakTextCustom() {
 
     //Speech settings
-    const speech = new SpeechSynthesisUtterance("Welcome to the Dreamwood Adventures. If you would like to keep auto-speak on and auto-voice recognition on, then please say accessible");
+    const speech = new SpeechSynthesisUtterance("Welcome to Dreamwood Adventures. If you would like to keep auto-speak on and auto-voice recognition on, then please say accessible. If you don't, then say no.");
     speech.lang = "en-US";
     speech.volume = 1;
     speech.rate = 1;
@@ -219,5 +224,22 @@ function speakSummary(){
 function oppositeAccessability() {
     alwaysSpeak = !alwaysSpeak;
     stopSpeak();
+}
+
+function speakNoUnderstand(){
+        //Adding each part of the journey to the text
+        let text = "I did not understand the command. Can you repeat that?";
+        //Speech settings
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "en-US";
+        speech.volume = 1;
+        speech.rate = 1;
+        speech.pitch = 1;
+    
+        //Speaking
+        window.speechSynthesis.speak(speech);
+        speech.onend = function () {
+            voiceClick();
+        }
 }
 
