@@ -342,7 +342,7 @@ const storyParts = {
     }
 };
 
-
+//Defining 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
@@ -366,6 +366,7 @@ let journeyText = [];
 let clickCount = 0;
 const maxClicks = 10;
 const toggleAccessability = document.getElementById("toggleAccessability");
+const textButton = document.getElementById("textButton");
 const helpButton = document.getElementById("helpButton");
 const backButton = document.getElementById("backButton");
 const restartButton = document.getElementById("restartButton");

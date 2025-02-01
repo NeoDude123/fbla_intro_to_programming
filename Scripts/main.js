@@ -63,6 +63,7 @@ function stopStory() {
     helpButton.style.visiblity = "hidden";
     backButton.style.visibility = "hidden";
     stopButton.style.visibility = "hidden";
+    textButton.style.visibility = "hidden";
     restartButton.style.visibility = "visible";
     journey.push("Story ended by user.");
 }
@@ -79,6 +80,8 @@ function closeHelp() {
 
 //Function for opening the summary with the button
 function showSummary() {
+
+    //Creating a summaryList to store the different elements of the journey summary
     const summaryList = document.getElementById("journeyList");
     summaryList.innerHTML = journey.map((step, index) => {
         return `

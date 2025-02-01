@@ -44,5 +44,6 @@ function restart() {
     helpButton.style.visibility = "visible";
     backButton.style.visibility = "visible";
     stopButton.style.visibility = "visible";
+    textButton.style.visibility = "visible";
     displayStoryPart("start");
 }

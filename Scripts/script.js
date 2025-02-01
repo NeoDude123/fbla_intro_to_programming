@@ -382,8 +382,7 @@ function voiceClick() {
 
 //Process the recognized command
 function processVoiceCommand(command) {
-    let ind = 0;
-    let indCheck = 1;
+
     const currentPart = storyParts[journeyText[journeyText.length - 1]];
     if (!currentPart) return;
 
@@ -392,18 +391,10 @@ function processVoiceCommand(command) {
         if (command.includes(option.text.toLowerCase())) {
             displayStoryPart(option.next);
             return;
-        } else if (command.includes("option one") || command.includes("option 1")) {
-            ind = 1;
-        } else if (command.includes("option two") || command.includes("option 2")){
-            ind = 2;
         }
         
     }
-    currentPart.options.forEach(opt => {
-        if(indCheck == ind) {
-            
-        }
-    });
+
 
     //Match the spoken command with one of the permanent buttons that are always on the screen
 
@@ -486,8 +477,6 @@ function processVoiceCommand(command) {
         return;
     }
     
-    //Giving alert if command isn't recognized
-    alert("Command not recognized. Try saying one of the available options.");
     voiceClick();
 }
 
@@ -692,7 +681,7 @@ function speakText() {
 function speakHelp(){
     
     //Speech settings
-    const speech = new SpeechSynthesisUtterance("This is an interactivey journey that takes the user's input to decide how it ends. Choose an option to progress the story. Your choices shape the adventure. Be careful, as every step along the journey, dangers await! Are you up for the challenge? Any time you wish to back out, you may say Stop to exit the forest story. However, those who manage to stay on the path, avoiding all the dangers possible, will be rewarded at the end. Many people however, will not meet such a favorable fate");
+    const speech = new SpeechSynthesisUtterance("This is an interactive journey that takes the user's input to decide how it ends. Choose an option to progress the story. Your choices shape the adventure. Be careful, as every step along the journey, dangers await! Are you up for the challenge? Any time you wish to back out, you may say Stop to exit the forest story. However, those who manage to stay on the path, avoiding all the dangers possible, will be rewarded at the end. Many people however, will not meet such a favorable fate");
     speech.lang = "en-US";
     speech.volume = 1;
     speech.rate = 1;
