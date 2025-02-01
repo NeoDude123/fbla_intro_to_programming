@@ -680,7 +680,7 @@ function speakText() {
 function speakHelp(){
     
     //Speech settings
-    const speech = new SpeechSynthesisUtterance("Choose an option to progress the story. Your choices shape the adventure. Be careful, as every step along the journey, dangers await! Are you up for the challenge? Any time you wish to back out, you may click Stop to exit the forest story. However, those who manage to stay on the path, avoiding all the dangers possible, will be rewarded at the end. Many people however, will not meet such a favorable fate");
+    const speech = new SpeechSynthesisUtterance("This is an interactivey journey that takes the user's input to decide how it ends. Choose an option to progress the story. Your choices shape the adventure. Be careful, as every step along the journey, dangers await! Are you up for the challenge? Any time you wish to back out, you may say Stop to exit the forest story. However, those who manage to stay on the path, avoiding all the dangers possible, will be rewarded at the end. Many people however, will not meet such a favorable fate");
     speech.lang = "en-US";
     speech.volume = 1;
     speech.rate = 1;
