@@ -63,9 +63,15 @@ button:hover {
     transform: translate(-50%, -50%);
     z-index: 1000;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    width: 50%;
+}
+
+#journeyList input {
+    width: 95%;
+    padding: 5px;
+    font-size: 1em;
 }
 
 .modal button {
     margin-top: 10px;
 }
-

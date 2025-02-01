@@ -406,6 +406,9 @@ function processVoiceCommand(command) {
     if (command.includes("view journey summary")) {
         journeySummary = true;
         showSummary();
+        if(alwaysSpeak){
+            speakSummary();
+        }
         return;
     }
 
@@ -413,6 +416,9 @@ function processVoiceCommand(command) {
     if (command.includes("help")) { 
         help = true;
         openHelp();
+        if(alwaysSpeak){
+            speakHelp();
+        }
         return;
     }
 
@@ -442,6 +448,9 @@ function processVoiceCommand(command) {
         if (command.includes("close")) {
             journeySummary = false;
             closeSummary();
+            setTimeout(() => {
+                speakText();
+            }, 1000)
             return;
         }
     }
@@ -451,17 +460,23 @@ function processVoiceCommand(command) {
         if (command.includes("close")) {
             help = false;
             closeHelp();
+            setTimeout(() => {
+                speakText();
+            }, 1000)
             return;
         }
     }
 
+    //If the user picks accessible mode
     if (command.includes("accessible")) {
         alwaysSpeak = true;
-        openHelp();
+        speakText();
         return;
     }
     
+    //Giving alert if command isn't recognized
     alert("Command not recognized. Try saying one of the available options.");
+    voiceClick();
 }
 
 //Necessary variables and lets for data storage
@@ -469,6 +484,7 @@ let journey = [];
 let journeyText = [];
 let clickCount = 0;
 const maxClicks = 10;
+const toggleAccessability = document.getElementById("toggleAccessability");
 const helpButton = document.getElementById("helpButton");
 const backButton = document.getElementById("backButton");
 const restartButton = document.getElementById("restartButton");
@@ -484,6 +500,7 @@ function displayStoryPart(part) {
     const currentPart = storyParts[part];
 
     stopSpeak();
+
     //If story part doesn't exist or some other error then print error message
     if (!currentPart) {
         storyText.textContent = "Something went wrong. Unable to load this part of the story.";
@@ -506,6 +523,11 @@ function displayStoryPart(part) {
     journey.push(currentPart.text);
     journeyText.push(part);
 
+    //If accessible mode, then speak the text no matter what
+    if (alwaysSpeak) {
+        speakText();
+    }
+
     //Displaying the correct options for each screen
     optionsDiv.innerHTML = "";
     currentPart.options.forEach(option => {
@@ -524,14 +546,12 @@ function stopStory() {
     // Set final message and remove all buttons
     stopSpeak();
     storyText.textContent = "Thank you for playing! We hope to see you again soon.";
-    optionsDiv.innerHTML = ""; // Clear all story options
+    optionsDiv.innerHTML = ""; //Clear all story options
 
-    //document.querySelectorAll("button").forEach(button => button.remove);
     helpButton.style.visiblity = "hidden";
     backButton.style.visibility = "hidden";
     stopButton.style.visibility = "hidden";
     restartButton.style.visibility = "visible";
-    //document.getElementById("restartModal").style.display = "block"; // Remove ALL buttons
     journey.push("Story ended by user.");
 }
 
@@ -545,7 +565,7 @@ function closeHelp() {
     document.getElementById("helpModal").style.display = "none";
 }
 
-// Function for opening the summary with the button
+//Function for opening the summary with the button
 function showSummary() {
     const summaryList = document.getElementById("journeyList");
     summaryList.innerHTML = journey.map((step, index) => {
@@ -556,12 +576,12 @@ function showSummary() {
         `;
     }).join("");
 
-    // Check if the save button already exists
+    //Check if the save button already exists
     const existingSaveButton = document.querySelector("#summaryModal .saveButton");
     if (!existingSaveButton) {
         const saveButton = document.createElement("button");
         saveButton.textContent = "Save Changes";
-        saveButton.classList.add("saveButton");  // Add a class to uniquely identify the button
+        saveButton.classList.add("saveButton");  //Add a class to uniquely identify the button
         saveButton.onclick = saveSummaryChanges;
         document.getElementById("summaryModal").appendChild(saveButton);
     }
@@ -569,38 +589,27 @@ function showSummary() {
     document.getElementById("summaryModal").style.display = "block";
 }
 
-
-
-
 //Function for closing the summary when the close button is clicked
 function closeSummary() {
     document.getElementById("summaryModal").style.display = "none";
 }
 
-// Function for closing the summary when the close button is clicked
-function closeSummary() {
-    document.getElementById("summaryModal").style.display = "none";
-}
-
-// Function for saving the summary changes
+//Function for saving the summary changes
 function saveSummaryChanges() {
     const inputs = document.querySelectorAll("#journeyList input");
     
-    // Update the journey array with the edited values
+    //Update the journey array with the edited values
     inputs.forEach(input => {
         const index = input.dataset.index;
         if(input.value.length < 100){
-            journey[index] = input.value;  // Save the edited value back to the journey array
+            journey[index] = input.value;  //Save the edited value back to the journey array
         }
         
     });
 
-    // Close the modal after saving changes
+    //Close the modal after saving changes
     closeSummary();
 }
-
-
-
 
 //Function for the back button to be functional
 function goBack() {
@@ -619,6 +628,7 @@ function restart() {
 
     restartButton.style.visibility = "hidden";
     
+    //Resetting all the values when the story is reset
     journey = [];
     journeyText = [];
     clickCount = 0;
@@ -628,44 +638,116 @@ function restart() {
     displayStoryPart("start");
 }
 
+//Method that speaks out the text based on what the current part of the story is
 function speakText() {
+
+    //Getting the current story part to figure out what to say
     const part = journeyText.pop();
     const currentPart = storyParts[part];
     let num = 1;
     let text = "";
     text += currentPart.text + ", ";
     
+    //Adding the different options that the user can pick from based on what story part they are on
     currentPart.options.forEach(option => {
         text += "Option " + num.toString() + ", ";
         num++;
         text += option.text + ", ";
     });
+
+    //Adding the different options that are permanently on the screen
     text += "Other options are, ";
     text += "Back, Stop, Help, View Journey Summary"
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = "en-US"; // Set language (change if needed)
-    speech.volume = 1; // Volume (0.0 to 1.0)
-    speech.rate = 0.6; // Speed (0.1 to 10)
-    speech.pitch = 1; // Pitch (0 to 2)
 
+    //Setting up the actual speech with its settings
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US"; //Set language (change if needed)
+    speech.volume = 1; //Volume (0.0 to 1.0)
+    speech.rate = 1; //Speed (0.1 to 10)
+    speech.pitch = 1; //Pitch (0 to 2)
+
+    //Actually speaking to the user
     window.speechSynthesis.speak(speech);
     journeyText.push(part);
-    }
 
+    //Activating the user's voice activation system after it is done reading
+    speech.onend = function (){
+        voiceClick();
+    }
+}
+    
+//Function that is used just for speaking out whatever is written on the help page
+function speakHelp(){
+    
+    //Speech settings
+    const speech = new SpeechSynthesisUtterance("Choose an option to progress the story. Your choices shape the adventure. Be careful, as every step along the journey, dangers await! Are you up for the challenge? Any time you wish to back out, you may click Stop to exit the forest story. However, those who manage to stay on the path, avoiding all the dangers possible, will be rewarded at the end. Many people however, will not meet such a favorable fate");
+    speech.lang = "en-US";
+    speech.volume = 1;
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    //Speaking
+    window.speechSynthesis.speak(speech);
+
+    //When the speaking is done, activate voice-activation again
+    speech.onend = function () {
+        voiceClick();
+    }
+}
+
+//Method just for stopping all speaking
 function stopSpeak(){
     window.speechSynthesis.cancel();
 }
 
+//Method for speaking the text at the beginning of the program to check fro accessability
 function speakTextCustom() {
+
+    //Speech settings
     const speech = new SpeechSynthesisUtterance("Welcome to the Dreamwood Adventures. If you would like to keep auto-speak on and auto-voice recognition on, then please say accessible");
     speech.lang = "en-US";
     speech.volume = 1;
-    speech.rate = 0.6;
+    speech.rate = 1;
     speech.pitch = 1;
+
+    //Speaking
     window.speechSynthesis.speak(speech);
-    setTimeout(() => {
+
+    //When the speaking is done, activate voice-activation again
+    speech.onend = function () {
         voiceClick();
-    }, 12000);
+    }
+}
+
+//Method for speaking the journey summary
+function speakSummary(){
+
+    //Adding each part of the journey to the text
+    let text = "";
+    journey.forEach(part => {
+        text += part + ", ";
+    });
+
+    //Speech settings
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.volume = 1;
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    //Speaking
+    window.speechSynthesis.speak(speech);
+
+    //Once speech is done, then activate voice-activation again
+    speech.onend = function () {
+        voiceClick();
+    }
+}
+
+//Function for closing the accessabilty mode when the button is clicked
+function oppositeAccessability() {
+    alwaysSpeak = !alwaysSpeak;
+    stopSpeak();
 }
 
 //Displaying the starting story part at the beginning of the adventure

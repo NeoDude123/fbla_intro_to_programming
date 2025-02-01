@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- Referencing our styles sheet -->
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Website Title -->
     <title>Dreamwood Adventure</title>
 </head>
 <body>
+
+    <!-- Main container in the center of the page -->
     <div class="container">
         <div class="child">
+            
+            <!-- Header -->
             <h1>Dreamwood Adventure</h1>
+
+            <!-- Preface text -->
             <p id="storyText">Welcome to the edge of a magical forest...</p>
+
+            <!-- Button options -->
             <div id="options"></div>
             <button onclick="speakText()">Read Text</button>
-
             <button id="backButton" onclick="goBack()">Back</button>
             <button id="stopButton" onclick="stopStory()">Stop</button>
             <button id="helpButton" onclick="openHelp()">Help</button>
             <button id="summaryButton" onclick="showSummary()">View Journey Summary</button>
             <button id="restartButton" onclick="restart()">Restart</button>
             <button id="voiceButton" onclick="voiceClick()">Voice Command</button>
+            <button id="toggleAccessability" onclick="oppositeAccessability()">Toggle Accessability</button>
         </div>
+
         <!-- Help Modal -->
         <div id="helpModal" class="modal">
+
+            <!-- Help Message -->
             <p><strong>How to Play:</strong></p>
             <p>Choose an option to progress the story. Your choices shape the adventure.
                Be careful, as every step along the journey, dangers await! Are you up for the challenge? Any time you wish
@@ -32,6 +47,7 @@
             </p>
             <button onclick="closeHelp()">Close</button>
         </div>
+
         <!-- Journey Summary Modal -->
         <div id="summaryModal" class="modal">
             <p><strong>Your Journey Summary:</strong></p>
@@ -39,11 +55,8 @@
             <button onclick="closeSummary()">Close</button>
         </div>
     </div>
+
+    <!-- Assigning our script option -->
     <script src="script.js"></script>
 </body>
 </html>
-
-<!-- <div id="restartModal" class = "modal">
-            <button onclick="restart()">Restart</button>
-        </div> -->
-
