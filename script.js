@@ -588,6 +588,8 @@ function goBack() {
     if(journeyText.length > 1){
         journeyText.pop();
         displayStoryPart(journeyText.pop());
+        journey.pop();
+        journey.pop();
     }
     
 }
@@ -610,20 +612,19 @@ function speakText() {
     const currentPart = storyParts[part];
     let num = 1;
     let text = "";
-    text += "Situation ";
-    text += currentPart.text;
+    text += currentPart.text + ", ";
     
     currentPart.options.forEach(option => {
-        text += "Option " + num.toString();
+        text += "Option " + num.toString() + ", ";
         num++;
-        text += option.text;
+        text += option.text + ", ";
     });
     text += "Other options are, ";
     text += "Back, Stop, Help, View Journey Summary"
     const speech = new SpeechSynthesisUtterance(text);
     speech.lang = "en-US"; // Set language (change if needed)
     speech.volume = 1; // Volume (0.0 to 1.0)
-    speech.rate = 1; // Speed (0.1 to 10)
+    speech.rate = 0.5; // Speed (0.1 to 10)
     speech.pitch = 1; // Pitch (0 to 2)
 
     window.speechSynthesis.speak(speech);
