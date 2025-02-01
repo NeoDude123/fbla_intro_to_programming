@@ -467,7 +467,7 @@ function displayStoryPart(part) {
     const storyText = document.getElementById("storyText");
     const optionsDiv = document.getElementById("options");
     const currentPart = storyParts[part];
-
+    stopSpeak();
     //If story part doesn't exist or some other error then print error message
     if (!currentPart) {
         storyText.textContent = "Something went wrong. Unable to load this part of the story.";
@@ -506,6 +506,7 @@ function stopStory() {
     const optionsDiv = document.getElementById("options");
 
     // Set final message and remove all buttons
+    stopSpeak();
     storyText.textContent = "Thank you for playing! We hope to see you again soon.";
     optionsDiv.innerHTML = ""; // Clear all story options
 
@@ -584,7 +585,7 @@ function saveSummaryChanges() {
 
 //Function for the back button to be functional
 function goBack() {
-    
+    stopSpeak();
     if(journeyText.length > 1){
         journeyText.pop();
         displayStoryPart(journeyText.pop());
@@ -598,13 +599,14 @@ function goBack() {
 function restart() {
 
     restartButton.style.visibility = "hidden";
-    displayStoryPart("start");
+    
     journey = [];
     journeyText = [];
     clickCount = 0;
     helpButton.style.visibility = "visible";
     backButton.style.visibility = "visible";
     stopButton.style.visibility = "visible";
+    displayStoryPart("start");
 }
 
 function speakText() {
@@ -630,6 +632,10 @@ function speakText() {
     window.speechSynthesis.speak(speech);
     journeyText.push(part);
     }
+
+function stopSpeak(){
+    window.speechSynthesis.cancel();
+}
 
 //Displaying the starting story part at the beginning of the adventure
 displayStoryPart("start");
