@@ -573,7 +573,10 @@ function saveSummaryChanges() {
     // Update the journey array with the edited values
     inputs.forEach(input => {
         const index = input.dataset.index;
-        journey[index] = input.value;  // Save the edited value back to the journey array
+        if(input.value.length < 100){
+            journey[index] = input.value;  // Save the edited value back to the journey array
+        }
+        
     });
 
     // Close the modal after saving changes
