@@ -382,6 +382,8 @@ function voiceClick() {
 
 //Process the recognized command
 function processVoiceCommand(command) {
+    let ind = 0;
+    let indCheck = 1;
     const currentPart = storyParts[journeyText[journeyText.length - 1]];
     if (!currentPart) return;
 
@@ -390,8 +392,18 @@ function processVoiceCommand(command) {
         if (command.includes(option.text.toLowerCase())) {
             displayStoryPart(option.next);
             return;
+        } else if (command.includes("option one") || command.includes("option 1")) {
+            ind = 1;
+        } else if (command.includes("option two") || command.includes("option 2")){
+            ind = 2;
         }
+        
     }
+    currentPart.options.forEach(opt => {
+        if(indCheck == ind) {
+            
+        }
+    });
 
     //Match the spoken command with one of the permanent buttons that are always on the screen
 
