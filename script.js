@@ -343,6 +343,11 @@ const storyParts = {
     }
 };
 
+//Unmute audio after user interaction
+document.addEventListener("click", () => {
+    speakTextCustom();
+}, { once: true }); //Ensures it runs only once
+
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
@@ -359,11 +364,15 @@ var stopB = false;
 var readText = false;
 var help = false;
 var journeySummary = false;
+var alwaysSpeak = false;
+
+voiceButton.onclick = () => {
+    voiceClick();
+};
 
 function voiceClick() {
-    voiceButton.onclick = () => {
-        recognition.start();
-    };
+    
+    recognition.start();
     
     //When speech is recognized
     recognition.onresult = (event) => {
@@ -445,6 +454,12 @@ function processVoiceCommand(command) {
             return;
         }
     }
+
+    if (command.includes("accessible")) {
+        alwaysSpeak = true;
+        openHelp();
+        return;
+    }
     
     alert("Command not recognized. Try saying one of the available options.");
 }
@@ -462,11 +477,12 @@ restartButton.style.visibility = "hidden";
 
 //Function that is responsible for correctly displaying the next story part
 function displayStoryPart(part) {
-
+    
     //Assigning the current story part, text, and options to be displaye don the screen
     const storyText = document.getElementById("storyText");
     const optionsDiv = document.getElementById("options");
     const currentPart = storyParts[part];
+
     stopSpeak();
     //If story part doesn't exist or some other error then print error message
     if (!currentPart) {
@@ -629,7 +645,7 @@ function speakText() {
     const speech = new SpeechSynthesisUtterance(text);
     speech.lang = "en-US"; // Set language (change if needed)
     speech.volume = 1; // Volume (0.0 to 1.0)
-    speech.rate = 0.5; // Speed (0.1 to 10)
+    speech.rate = 0.6; // Speed (0.1 to 10)
     speech.pitch = 1; // Pitch (0 to 2)
 
     window.speechSynthesis.speak(speech);
@@ -638,6 +654,18 @@ function speakText() {
 
 function stopSpeak(){
     window.speechSynthesis.cancel();
+}
+
+function speakTextCustom() {
+    const speech = new SpeechSynthesisUtterance("Welcome to the Dreamwood Adventures. If you would like to keep auto-speak on and auto-voice recognition on, then please say accessible");
+    speech.lang = "en-US";
+    speech.volume = 1;
+    speech.rate = 0.6;
+    speech.pitch = 1;
+    window.speechSynthesis.speak(speech);
+    setTimeout(() => {
+        voiceClick();
+    }, 12000);
 }
 
 //Displaying the starting story part at the beginning of the adventure
